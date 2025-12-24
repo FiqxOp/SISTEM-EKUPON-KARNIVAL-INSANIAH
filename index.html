@@ -1,0 +1,1403 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  <title>Karnival Insaniah Food Festival</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    /* === SEMUA CSS DARI FAIL ASAL SUDAH DIGABUNG DI SINI === */
+    :root {
+      --primary: #6b46c1;
+      --primary-dark: #5a5fcf;
+      --secondary: #38a169;
+      --danger: #e53e3e;
+      --warning: #dd6b20;
+      --light: #f8fafc;
+      --dark: #2d3748;
+      --gray: #e2e8f0;
+      --card-bg: #ffffff;
+      --gradient-start: #805ad5;
+      --gradient-end: #667eea;
+      --footer-bg: #1e293b;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    html, body {
+      height: 100%;
+    }
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    .container {
+       display: flex;
+       flex-direction: column;
+       flex: 1;
+    }
+    header {
+      background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+      color: white;
+      padding: 25px;
+      text-align: center;
+      flex-shrink: 0;
+      position: relative;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 100;
+      overflow: hidden;
+    }
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+      margin-bottom: 8px;
+    }
+    .header-subtitle {
+      font-size: 1rem;
+      opacity: 0.95;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .main-scroll {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px;   /* padding biasa sahaja */
+    }
+    .tabs {
+      display: flex;
+      background: linear-gradient(135deg, #eef2ff, #e6e9ff);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      flex-shrink: 0;
+    }
+    .tab {
+      padding: 18px 10px;
+      cursor: pointer;
+      flex: 1;
+      text-align: center;
+      font-weight: 700;
+      color: #4a5568;
+      transition: all 0.3s ease;
+      position: relative;
+      font-size: 0.95rem;
+    }
+    .tab i {
+      display: block;
+      font-size: 1.2rem;
+      margin-bottom: 4px;
+    }
+    .tab::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 4px;
+      background: var(--primary);
+      transition: all 0.3s ease;
+      transform: translateX(-50%);
+    }
+    .tab:hover {
+      background: rgba(90, 95, 207, 0.12);
+      color: var(--primary-dark);
+    }
+    .tab:hover::after {
+      width: 80%;
+    }
+    .tab.active {
+      background: var(--primary-dark);
+      color: white;
+    }
+    .tab.active::after {
+      width: 100%;
+    }
+    .tab-content {
+      display: none;
+      padding: 25px;
+    }
+    .tab-content.active {
+      display: block;
+      animation: fadeIn 0.5s ease;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .form-group {
+      margin-bottom: 22px;
+    }
+    label {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: 700;
+      color: var(--dark);
+      font-size: 1rem;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 14px;
+      border: 2px solid var(--gray);
+      border-radius: 12px;
+      font-size: 1.05rem;
+      background: #fafcff;
+    }
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(107, 70, 193, 0.25);
+      background: white;
+    }
+    textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+    button {
+      background: linear-gradient(135deg, var(--primary), #7c3aed);
+      color: white;
+      border: none;
+      padding: 14px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 1.05rem;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(107, 70, 193, 0.3);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+    }
+    button:hover {
+      background: linear-gradient(135deg, #7c3aed, var(--primary));
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(107, 70, 193, 0.4);
+    }
+    .back-btn {
+      background: linear-gradient(135deg, #6b7280, #4b5563);
+      margin-top: 25px;
+      padding: 14px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    .back-btn:hover {
+      background: linear-gradient(135deg, #4b5563, #6b7280);
+    }
+    .reset-btn, .delete-btn {
+      background: linear-gradient(135deg, var(--danger), #c53030);
+      margin-top: 15px;
+      padding: 12px 25px;
+      font-size: 1rem;
+      box-shadow: 0 4px 15px rgba(229, 62, 62, 0.3);
+    }
+    .reset-btn:hover, .delete-btn:hover {
+      background: linear-gradient(135deg, #c53030, var(--danger));
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(229, 62, 229, 0.4);
+    }
+    .edit-btn {
+      background: linear-gradient(135deg, #3182ce, #2c5282);
+      padding: 8px 15px;
+      font-size: 0.9rem;
+      box-shadow: 0 4px 15px rgba(49, 130, 206, 0.3);
+    }
+    .edit-btn:hover {
+      background: linear-gradient(135deg, #2c5282, #3182ce);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(49, 130, 206, 0.4);
+    }
+    .search-btn {
+      background: linear-gradient(135deg, var(--secondary), #2f855a);
+      width: 120px;
+      padding: 16px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      box-shadow: 0 4px 15px rgba(56, 161, 105, 0.3);
+    }
+    .search-btn:hover {
+      background: linear-gradient(135deg, #2f855a, var(--secondary));
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(56, 161, 105, 0.4);
+    }
+    .result {
+      margin-top: 20px;
+      padding: 18px;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 1.05rem;
+      animation: pulse 0.3s ease;
+    }
+    @keyframes pulse {
+      0% { transform: scale(0.95); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .success {
+      background: linear-gradient(135deg, #dafbe1, #c6f6d5);
+      color: #166534;
+      border-left: 5px solid #38a169;
+    }
+    .error {
+      background: linear-gradient(135deg, #fee, #fed7d7);
+      color: #991b1b;
+      border-left: 5px solid var(--danger);
+    }
+    .info {
+      background: linear-gradient(135deg, #e0f2fe, #bee3f8);
+      color: #0c4a6e;
+      text-align: center;
+      padding: 16px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      font-size: 1rem;
+      border-left: 5px solid #3182ce;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    th, td {
+      text-align: left;
+      padding: 14px;
+      border-bottom: 1px solid var(--gray);
+    }
+    th {
+      background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+      color: white;
+      font-weight: 700;
+    }
+    tr:nth-child(even) {
+      background: #f8fafc;
+    }
+    tr:hover {
+      background: #edf2f7;
+    }
+    .transaction-list, .coupon-list {
+      max-height: 250px;
+      overflow-y: auto;
+      margin-top: 15px;
+      border-radius: 12px;
+      border: 1px solid var(--gray);
+    }
+    .auth-box {
+      text-align: center;
+      padding: 30px;
+    }
+    .auth-box input {
+      max-width: 320px;
+      margin: 0 auto 20px;
+    }
+    .admin-actions {
+      text-align: center;
+      margin: 25px 0;
+      padding: 18px;
+      background: rgba(248, 250, 252, 0.5);
+      border-radius: 12px;
+    }
+    .status-used {
+      color: var(--danger);
+      font-weight: 700;
+    }
+    .status-unused {
+      color: var(--secondary);
+      font-weight: 700;
+    }
+    .search-box {
+      margin-bottom: 20px;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .search-box input {
+      flex: 1;
+      padding: 16px;
+      font-size: 1.1rem;
+      border-width: 2px;
+      min-width: 200px;
+    }
+    .search-box label {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--dark);
+      min-width: 250px;
+    }
+    .toggle-section {
+      padding: 18px;
+      background: linear-gradient(135deg, #f8fafc, #edf2f7);
+      border-radius: 12px;
+      margin-top: 20px;
+      border: 1px solid rgba(226, 232, 240, 0.5);
+    }
+    .toggle-section h3 {
+      margin-bottom: 12px;
+      color: var(--dark);
+      cursor: pointer;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .section-content {
+      display: none;
+    }
+    .section-content.active {
+      display: block;
+      animation: slideDown 0.4s ease;
+    }
+    @keyframes slideDown {
+      from { opacity: 0; max-height: 0; }
+      to { opacity: 1; max-height: 1000px; }
+    }
+    .shop-card {
+      background: white;
+      border: 1px solid var(--gray);
+      border-radius: 12px;
+      padding: 18px;
+      margin-bottom: 16px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+    .shop-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .shop-title {
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--dark);
+    }
+    .shop-meta {
+      font-size: 0.85rem;
+      color: #4a5568;
+      margin: 6px 0;
+    }
+    .shop-bank {
+      font-size: 0.85rem;
+      color: #4a5568;
+      background: #f8fafc;
+      padding: 10px;
+      border-radius: 8px;
+      margin-top: 10px;
+      border-left: 3px solid #cbd5e0;
+    }
+    .btn-group {
+      margin-top: 12px;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .btn-group button {
+      margin: 0;
+      font-size: 0.95rem;
+      padding: 10px;
+    }
+    .highlight {
+      background: linear-gradient(120deg, #a78bfa, #8b5cf6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 800;
+    }
+    .stats-card {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      padding: 18px;
+      border-radius: 12px;
+      margin: 18px 0;
+      text-align: center;
+      box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
+    }
+    .stats-number {
+      font-size: 2.2rem;
+      font-weight: 800;
+      margin: 8px 0;
+    }
+    .stats-label {
+      font-size: 1rem;
+      opacity: 0.9;
+    }
+    #autoShopName {
+      min-height: 26px;
+      padding: 10px;
+      background: #f0f9ff;
+      border-radius: 8px;
+      margin-top: 6px;
+      font-weight: 600;
+      color: #1e40af;
+      border-left: 3px solid #3b82f6;
+      display: none;
+    }
+    .footer {
+      text-align: center;
+      padding: 16px;
+      background: var(--footer-bg);
+      color: #cbd5e1;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+      position: relative;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      z-index: 100;
+    }
+    .footer a {
+      color: #93c5fd;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .footer a:hover {
+      text-decoration: underline;
+      color: white;
+    }
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 6px;
+      flex-wrap: wrap;
+    }
+    .social-links a {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.9rem;
+    }
+    /* === FULLSCREEN RECEIPT === */
+    #receiptModal, #rejectModal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100dvh;
+      background: rgba(0,0,0,0.88);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      backdrop-filter: blur(8px);
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    #receiptModal.active, #rejectModal.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    .receipt-content {
+      background: white;
+      width: 96vw;
+      max-width: 520px;
+      border-radius: 24px;
+      padding: clamp(30px, 8vh, 50px) clamp(20px, 5vw, 40px);
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+      animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative;
+      overflow: hidden;
+    }
+    @keyframes popIn {
+      0% { transform: scale(0.7); opacity: 0; }
+      70% { transform: scale(1.05); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .receipt-check {
+      font-size: 8rem;
+      margin: 0 0 20px;
+      text-shadow: 0 4px 10px rgba(56, 161, 105, 0.3);
+    }
+    .receipt-title {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #2d3748;
+      margin-bottom: 25px;
+    }
+    .receipt-detail {
+      background: #f8fafc;
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+      font-weight: 600;
+      font-size: 1.1rem;
+      text-align: left;
+      border-left: 4px solid #6b46c1;
+    }
+    .receipt-btn {
+      background: linear-gradient(135deg, #6b46c1, #7c3aed);
+      color: white;
+      border: none;
+      padding: 16px;
+      border-radius: 14px;
+      font-size: 1.2rem;
+      font-weight: 700;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 20px;
+      box-shadow: 0 6px 20px rgba(107, 70, 193, 0.4);
+      transition: all 0.3s ease;
+    }
+    .receipt-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(107, 70, 193, 0.55);
+    }
+    /* Rejection modal specific */
+    #rejectModal .receipt-check {
+      color: #e53e3e;
+    }
+    #rejectModal .receipt-title {
+      color: #991b1b;
+    }
+    #rejectModal .receipt-detail {
+      border-left-color: #e53e3e;
+    }
+    #rejectModal .receipt-btn {
+      background: linear-gradient(135deg, #c53030, var(--danger));
+    }
+    #rejectModal .receipt-detail.warning {
+      background: #fef2f2;
+      color: #991b1b;
+      border-left-color: #e53e3e;
+    }
+
+    /* === RESPONSIVE DESIGN === */
+    @media (max-width: 768px) {
+      h1 { font-size: 1.7rem; }
+      .header-subtitle { font-size: 0.9rem; }
+      .tabs { flex-direction: column; }
+      .tab { padding: 14px 8px; font-size: 0.9rem; }
+      .search-box { flex-direction: column; align-items: stretch; }
+      .search-box label { min-width: auto; margin-bottom: 8px; }
+      .shop-header { flex-direction: column; gap: 10px; }
+      .btn-group { flex-direction: column; }
+      .btn-group button { width: 100%; }
+      .footer { font-size: 0.85rem; padding: 14px; }
+    }
+
+    /* === Tambah sokongan tablet (opsional, tapi baik) === */
+    @media (min-width: 769px) and (max-width: 1024px) {
+      .receipt-content { max-width: 90vw; }
+      .stats-number { font-size: 1.8rem; }
+      .tab { font-size: 0.95rem; }
+    }
+  </style>
+</head>
+<body>
+  <!-- === KANDUNGAN HTML SAMA SEPERTI FAIL ASAL === -->
+  <div class="container">
+    <header>
+      <h1>🎪 Karnival Insaniah Food Festival</h1>
+      <div class="header-subtitle">Menyediakan Pengalaman Makanan & Kebudayaan Terbaik di IPG Kampus Darulaman</div>
+    </header>
+    <div class="main-scroll">
+      <div class="tabs">
+        <div class="tab active" onclick="openTab('customer', this)">
+          <i class="fas fa-shopping-cart"></i> Pembeli
+        </div>
+        <div class="tab" onclick="openTab('shopReg', this)">
+          <i class="fas fa-store"></i> Daftar Gerai Kelas
+        </div>
+        <div class="tab" onclick="openTab('admin', this)">
+          <i class="fas fa-lock"></i> Pentadbir
+        </div>
+      </div>
+
+      <!-- Tab PEMBELI -->
+      <div id="customer" class="tab-content active">
+        <div class="info">
+          <i class="fas fa-ticket-alt"></i> Masukkan kod kupon bermula dengan <strong class="highlight">KI</strong> (contoh: KI0001, KI1234)
+        </div>
+        <div class="form-group">
+          <label for="couponId"><i class="fas fa-barcode"></i> Kod Kupon:</label>
+          <input type="text" id="couponId" placeholder="KI + 4 nombor (contoh: KI0001)" maxlength="6" />
+        </div>
+        <div class="form-group">
+          <label for="stallNumberInput"><i class="fas fa-hashtag"></i> Nombor Gerai:</label>
+          <input type="text" id="stallNumberInput" placeholder="Contoh: G01, G15, GERAI-03" oninput="updateShopName()" />
+          <div id="autoShopName"></div>
+        </div>
+        <div class="form-group">
+          <label for="amount"><i class="fas fa-money-bill-wave"></i> Jumlah Bayaran (RM):</label>
+          <input type="number" id="amount" step="0.01" min="0.01" placeholder="5.00" />
+        </div>
+        <button onclick="processTransaction()">
+          <i class="fas fa-credit-card"></i> Bayar dengan Kupon
+        </button>
+        <div id="customerResult"></div>
+      </div>
+
+      <!-- Tab Pendaftaran Gerai KELAS -->
+      <div id="shopReg" class="tab-content">
+        <div class="info">
+          <i class="fas fa-chalkboard-teacher"></i> Pendaftaran Gerai bagi <strong>Kelas di IPG Kampus Darulaman (IPGKDA)</strong><br>
+          <strong class="highlight">SILA ISI DENGAN HURUF BESAR</strong>
+        </div>
+        <div class="form-group">
+          <label for="regStallNumber"><i class="fas fa-hashtag"></i> Nombor Gerai *</label>
+          <input type="text" id="regStallNumber" placeholder="Contoh: G01, G15, GERAI-03" />
+        </div>
+        <div class="form-group">
+          <label for="regShopName"><i class="fas fa-store"></i> Nama Gerai *</label>
+          <input type="text" id="regShopName" placeholder="Contoh: GERAI KUIH BIMBINGAN" />
+        </div>
+        <div class="form-group">
+          <label for="regBatch"><i class="fas fa-calendar-alt"></i> Batch Ambilan *</label>
+          <input type="text" id="regBatch" placeholder="Contoh: PISMP OGOS 2024/2028" />
+        </div>
+        <div class="form-group">
+          <label for="regProgram"><i class="fas fa-graduation-cap"></i> Program Pengajian *</label>
+          <select id="regProgram" onchange="toggleCustomProgramField()">
+            <option value="">-- Pilih Program --</option>
+            <option value="Bimbingan dan Kaunseling">Bimbingan dan Kaunseling</option>
+            <option value="Sejarah">Sejarah</option>
+            <option value="Pendidikan Islam">Pendidikan Islam</option>
+            <option value="Bahasa Melayu">Bahasa Melayu</option>
+            <option value="TESL">TESL</option>
+            <option value="Bahasa Arab">Bahasa Arab</option>
+            <option value="PSV">PSV</option>
+            <option value="Lain-lain">Lain-lain</option>
+          </select>
+        </div>
+        <div class="form-group" id="customProgramField" style="display: none;">
+          <label for="regCustomProgram"><i class="fas fa-pen"></i> Sila nyatakan program:</label>
+          <input type="text" id="regCustomProgram" placeholder="Contoh: PENDIDIKAN SAINS" />
+        </div>
+        <div class="form-group">
+          <label for="regClassNumber"><i class="fas fa-list-ol"></i> Nombor Kelas *</label>
+          <input type="text" id="regClassNumber" placeholder="Contoh: A, B, C atau 1, 2, 3" />
+        </div>
+        <h2><i class="fas fa-university"></i> Maklumat Akaun Bank (Wajib)</h2>
+        <div class="form-group">
+          <label for="regAccName"><i class="fas fa-user"></i> Nama Pemegang Akaun *</label>
+          <input type="text" id="regAccName" placeholder="Contoh: AHMAD BIN ISMAIL" />
+        </div>
+        <div class="form-group">
+          <label for="regBankName"><i class="fas fa-building"></i> Nama Bank *</label>
+          <input type="text" id="regBankName" placeholder="Contoh: MAYBANK, CIMB, PUBLIC BANK" />
+        </div>
+        <div class="form-group">
+          <label for="regAccNum"><i class="fas fa-credit-card"></i> Nombor Akaun *</label>
+          <input type="text" id="regAccNum" placeholder="Contoh: 1234567890" maxlength="20" />
+        </div>
+        <div class="form-group">
+          <label for="regPhone"><i class="fas fa-mobile-alt"></i> Nombor Telefon *</label>
+          <input type="tel" id="regPhone" placeholder="Contoh: 0123456789 atau 012-3456789" />
+        </div>
+        <button onclick="submitClassRegistration()">
+          <i class="fas fa-check-circle"></i> Daftar Gerai Kelas
+        </button>
+        <div id="regResult"></div>
+      </div>
+
+      <!-- Tab Pentadbir -->
+      <div id="admin" class="tab-content">
+        <div id="adminAuth" class="auth-box">
+          <h3><i class="fas fa-lock"></i> Akses Pentadbir</h3>
+          <p>Masukkan kata laluan untuk melihat panel pentadbir</p>
+          <input type="password" id="adminPass" placeholder="Kata laluan" />
+          <br>
+          <button onclick="tryAdminLogin()">
+            <i class="fas fa-key"></i> Log Masuk
+          </button>
+          <div id="authMessage" style="margin-top: 15px; min-height: 28px;"></div>
+        </div>
+        <div id="adminDashboard" style="display: none;">
+          <div class="stats-card">
+            <div class="stats-label">📊 JUMLAH KESELURUHAN</div>
+            <div class="stats-number" id="totalStats">0</div>
+            <div class="stats-label">Transaksi Berjaya</div>
+          </div>
+          <div class="toggle-section">
+            <h3 onclick="toggleSection('classStalls')">
+              <i class="fas fa-chalkboard-teacher"></i> Senarai Gerai Kelas ▼
+            </h3>
+            <div id="classStalls" class="section-content active">
+              <div id="classStallsList"></div>
+            </div>
+          </div>
+          <div class="toggle-section">
+            <h3 onclick="toggleSection('analysis')">
+              <i class="fas fa-chart-line"></i> Analisis & Laporan ▼
+            </h3>
+            <div id="analysis" class="section-content">
+              <h2><i class="fas fa-coins"></i> Jumlah Kutipan Setiap Gerai</h2>
+              <table id="profitTable">
+                <thead>
+                  <tr>
+                    <th>Gerai</th>
+                    <th>Bil. Transaksi</th>
+                    <th>Jumlah Kutipan (RM)</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+              <h2><i class="fas fa-history"></i> Transaksi Terkini</h2>
+              <div class="transaction-list" id="transactionList"></div>
+            </div>
+          </div>
+          <div class="toggle-section">
+            <h3 onclick="toggleSection('couponMgmt')">
+              <i class="fas fa-ticket-alt"></i> Pengurusan Kupon ▼
+            </h3>
+            <div id="couponMgmt" class="section-content">
+              <div class="search-box">
+                <label for="couponSearch"><i class="fas fa-search"></i> Cari Kod Kupon (KI + 4 digit):</label>
+                <input type="text" id="couponSearch" placeholder="KI0001, KI1234, KI3000, dll..." oninput="filterCoupons()" autofocus />
+                <button class="search-btn" onclick="filterCoupons()">CARI</button>
+              </div>
+              <div style="margin-bottom: 20px;">
+                <label><i class="fas fa-sort"></i> Susun mengikut:</label>
+                <select id="couponSort" onchange="filterCoupons()" style="padding:12px;font-size:1rem;width:100%;max-width:300px;">
+                  <option value="default">Default (A–Z)</option>
+                  <option value="used-first">✅ Telah Digunakan Dulu</option>
+                  <option value="low-balance">💰 Baki Rendah Dulu</option>
+                  <option value="az">A → Z</option>
+                  <option value="za">Z → A</option>
+                </select>
+              </div>
+              <table id="couponTable">
+                <thead>
+                  <tr>
+                    <th>Kod Kupon</th>
+                    <th>Status</th>
+                    <th>Baki (RM)</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </div>
+          <div class="admin-actions">
+            <button class="reset-btn" onclick="confirmReset()">
+              <i class="fas fa-trash-alt"></i> Reset Semua Data
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <p>© 2025 Karnival Insaniah Food Festival. Hak Cipta Terpelihara.</p>
+      <p>Dibangunkan oleh: <strong>Afeeq Fakhrullah</strong></p>
+      <div class="social-links">
+        <a href="https://www.instagram.com/_khaifeeq_/" target="_blank" rel="noopener">
+          <i class="fab fa-instagram"></i> Instagram: @_khaifeeq_
+        </a>
+        <a href="https://www.tiktok.com/@fiqx2411" target="_blank" rel="noopener">
+          <i class="fab fa-tiktok"></i> TikTok: @fiqx2411
+        </a>
+      </div>
+      <p style="margin-top: 10px; font-size: 0.8rem; opacity: 0.8;">
+        Sistem ini dibangunkan khas untuk acara Karnival Insaniah di IPG Kampus Darulaman.
+      </p>
+    </div>
+
+    <!-- ✅ SUCCESS RECEIPT -->
+    <div id="receiptModal">
+      <div class="receipt-content">
+        <div class="receipt-check">✓</div>
+        <div class="receipt-title">✅ BAYARAN BERJAYA!</div>
+        <div class="receipt-detail">
+          <strong>🎟️ Kod Kupon:</strong> <span id="rcpt-coupon"></span>
+        </div>
+        <div class="receipt-detail">
+          <strong>🏪 Gerai:</strong> <span id="rcpt-stall"></span>
+        </div>
+        <div class="receipt-detail">
+          <strong>💰 Jumlah:</strong> RM<span id="rcpt-amount"></span>
+        </div>
+        <div class="receipt-detail">
+          <strong>💵 Baki Kupon:</strong> RM<span id="rcpt-balance"></span>
+        </div>
+        <button class="receipt-btn" onclick="closeReceipt()">
+          <i class="fas fa-arrow-left"></i> KEMBALI KE MENU
+        </button>
+      </div>
+    </div>
+
+    <!-- ❌ REJECTION MODAL -->
+    <div id="rejectModal">
+      <div class="receipt-content">
+        <div class="receipt-check">✕</div>
+        <div class="receipt-title">❌ TRANSAKSI DITOLAK!</div>
+        <div class="receipt-detail">
+          <strong>🎟️ Kod Kupon:</strong> <span id="rjct-coupon"></span>
+        </div>
+        <div class="receipt-detail">
+          <strong>💰 Jumlah Cubaan:</strong> RM<span id="rjct-amount"></span>
+        </div>
+        <div class="receipt-detail">
+          <strong>💵 Baki Semasa:</strong> RM<span id="rjct-balance"></span>
+        </div>
+        <div class="receipt-detail warning">
+          <strong>⛔ Sebab:</strong> Baki tidak mencukupi
+        </div>
+        <button class="receipt-btn" onclick="closeRejectModal()">
+          <i class="fas fa-arrow-left"></i> KEMBALI KE MENU
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- === SCRIPT SAMA SEPERTI ASAL === -->
+  <script>
+    const ADMIN_PASSWORD = "INSANIAH2025";
+    const STORAGE_KEYS = ['shops', 'coupons', 'transactions', 'shopStats', 'classStalls'];
+    let SHOPS = [];
+    let CLASSSTALLS = [];
+    let coupons = {};
+    let transactions = [];
+    let shopStats = {};
+    let isAdminLoggedIn = false;
+
+    function scrollToTop() {
+      const container = document.querySelector('.main-scroll');
+      if (container) {
+        container.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }
+
+    function clearAllStorage() {
+      STORAGE_KEYS.forEach(key => localStorage.removeItem(key));
+      Object.keys(localStorage).forEach(key => {
+        if (key.startsWith('shop') || key.includes('coupon') || key.includes('trans') || key.includes('class')) {
+          localStorage.removeItem(key);
+        }
+      });
+    }
+
+    function loadFromStorage() {
+      const savedShops = localStorage.getItem('shops');
+      const savedCoupons = localStorage.getItem('coupons');
+      const savedTransactions = localStorage.getItem('transactions');
+      const savedStats = localStorage.getItem('shopStats');
+      const savedClassStalls = localStorage.getItem('classStalls');
+      if (savedShops) {
+        SHOPS = JSON.parse(savedShops);
+        shopStats = savedStats ? JSON.parse(savedStats) : initShopStats();
+      } else {
+        initializeDefaultData();
+      }
+      if (savedCoupons) {
+        coupons = JSON.parse(savedCoupons);
+      } else {
+        coupons = generateSequentialCoupons(3000);
+      }
+      transactions = savedTransactions ? JSON.parse(savedTransactions) : [];
+      CLASSSTALLS = savedClassStalls ? JSON.parse(savedClassStalls) : [];
+      updateShopSelect();
+      updateTotalStats();
+    }
+
+    function saveToStorage() {
+      localStorage.setItem('shops', JSON.stringify(SHOPS));
+      localStorage.setItem('coupons', JSON.stringify(coupons));
+      localStorage.setItem('transactions', JSON.stringify(transactions));
+      localStorage.setItem('shopStats', JSON.stringify(shopStats));
+      localStorage.setItem('classStalls', JSON.stringify(CLASSSTALLS));
+    }
+
+    function initShopStats() {
+      const stats = {};
+      SHOPS.forEach(shop => stats[shop.id] = { count: 0, total: 0 });
+      CLASSSTALLS.forEach(stall => stats[stall.id] = { count: 0, total: 0 });
+      return stats;
+    }
+
+    function initializeDefaultData() {
+      SHOPS = [
+        { id: 1, name: "Gerai Nasi Lemak Tradisional", location: "IPGKDA" },
+        { id: 2, name: "Satay & Grill Station", location: "IPGKDA" },
+        { id: 3, name: "Minuman Ais Tradisional", location: "IPGKDA" },
+        { id: 4, name: "Kuih-Muih Tempatan", location: "IPGKDA" },
+        { id: 5, name: "Goreng-Goreng & Snack", location: "IPGKDA" }
+      ];
+      shopStats = initShopStats();
+    }
+
+    function generateSequentialCoupons(count) {
+      const coupons = {};
+      for (let i = 1; i <= count; i++) {
+        const code = 'KI' + String(i).padStart(4, '0');
+        coupons[code] = { balance: 10.00, active: true };
+      }
+      return coupons;
+    }
+
+    function openTab(tabName, element) {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+      element.classList.add('active');
+      document.getElementById(tabName).classList.add('active');
+      if (tabName === 'admin' && isAdminLoggedIn) {
+        refreshAdminView();
+      }
+    }
+
+    function toggleSection(id) {
+      const el = document.getElementById(id);
+      el.classList.toggle('active');
+    }
+
+    function toggleCustomProgramField() {
+      const progSelect = document.getElementById('regProgram');
+      const customField = document.getElementById('customProgramField');
+      if (progSelect.value === 'Lain-lain') {
+        customField.style.display = 'block';
+      } else {
+        customField.style.display = 'none';
+        document.getElementById('regCustomProgram').value = '';
+      }
+    }
+
+    function isValidMalaysianPhone(phone) {
+      const digitsOnly = phone.replace(/\D/g, '');
+      return /^01[0-9]{8,9}$/.test(digitsOnly);
+    }
+
+    function showErrorReg(msg) {
+      const resultDiv = document.getElementById('regResult');
+      resultDiv.className = 'result error';
+      resultDiv.textContent = msg;
+    }
+
+    function showError(msg) {
+      const resultDiv = document.getElementById('customerResult');
+      resultDiv.className = 'result error';
+      resultDiv.innerHTML = msg.split('\n').map(line => `<div>${line}</div>`).join('');
+    }
+
+    function updateShopName() {
+      const input = document.getElementById('stallNumberInput').value.trim().toUpperCase();
+      const display = document.getElementById('autoShopName');
+      if (!input) {
+        display.style.display = 'none';
+        return;
+      }
+      const foundClass = CLASSSTALLS.find(s => s.stallNumber === input);
+      if (foundClass) {
+        display.innerHTML = `✅ <strong>${foundClass.stallNumber}</strong> — ${foundClass.shopName} <br><small>Program: ${foundClass.program} | Kelas: ${foundClass.classNumber}</small>`;
+        display.style.display = 'block';
+        display.style.color = '#1e40af';
+        display.style.borderLeftColor = '#3b82f6';
+        return;
+      }
+      const foundDefault = SHOPS.find(s => s.name.toUpperCase().includes(input) || String(s.id) === input);
+      if (foundDefault) {
+        display.innerHTML = `✅ Gerai: <strong>${foundDefault.name}</strong>`;
+        display.style.display = 'block';
+        display.style.color = '#1e40af';
+        display.style.borderLeftColor = '#3b82f6';
+        return;
+      }
+      display.innerHTML = `❌ Tiada gerai dengan nombor <strong>${input}</strong>`;
+      display.style.color = '#991b1b';
+      display.style.borderLeftColor = '#e53e3e';
+      display.style.display = 'block';
+    }
+
+    function processTransaction() {
+      const couponId = document.getElementById('couponId').value.trim().toUpperCase();
+      const stallNumber = document.getElementById('stallNumberInput').value.trim().toUpperCase();
+      const amount = parseFloat(document.getElementById('amount').value);
+
+      if (!/^KI\d{4}$/.test(couponId)) {
+        showError("Format salah. Kod mesti 'KI' diikuti 4 digit (contoh: KI0001, KI3000).");
+        return;
+      }
+      if (!stallNumber) { showError("Sila masukkan nombor gerai."); return; }
+      if (!amount || amount <= 0) { showError("Jumlah tidak sah."); return; }
+
+      let selectedShop = null;
+      let shopId = null;
+      let shopName = "Tidak Diketahui";
+
+      const foundClass = CLASSSTALLS.find(s => s.stallNumber === stallNumber);
+      if (foundClass) {
+        selectedShop = foundClass;
+        shopId = foundClass.id;
+        shopName = foundClass.shopName;
+      } else {
+        const foundDefault = SHOPS.find(s => s.name.toUpperCase().includes(stallNumber) || String(s.id) === stallNumber);
+        if (foundDefault) {
+          selectedShop = foundDefault;
+          shopId = foundDefault.id;
+          shopName = foundDefault.name;
+        }
+      }
+
+      if (!selectedShop) {
+        showError(`❌ Nombor gerai <strong>${stallNumber}</strong> tidak wujud.`);
+        return;
+      }
+
+      const coupon = coupons[couponId];
+      if (!coupon || !coupon.active) {
+        showError("❌ Kod kupon tidak sah atau tidak wujud.");
+        return;
+      }
+
+      if (coupon.balance < amount) {
+        document.getElementById('rjct-coupon').textContent = couponId;
+        document.getElementById('rjct-amount').textContent = amount.toFixed(2);
+        document.getElementById('rjct-balance').textContent = coupon.balance.toFixed(2);
+        setTimeout(() => {
+          document.getElementById('rejectModal').classList.add('active');
+        }, 100);
+        document.getElementById('amount').value = '';
+        document.getElementById('couponId').value = '';
+        document.getElementById('stallNumberInput').value = '';
+        document.getElementById('autoShopName').style.display = 'none';
+        return;
+      }
+
+      coupon.balance -= amount;
+      const newTx = {
+        id: Date.now(),
+        couponId,
+        shopName,
+        shopId,
+        amount,
+        balanceAfter: coupon.balance,
+        time: new Date().toLocaleString('ms-MY', { hour12: false })
+      };
+      transactions.unshift(newTx);
+      if (!shopStats[shopId]) shopStats[shopId] = { count: 0, total: 0 };
+      shopStats[shopId].count += 1;
+      shopStats[shopId].total += amount;
+      saveToStorage();
+      updateTotalStats();
+
+      document.getElementById('rcpt-coupon').textContent = couponId;
+      document.getElementById('rcpt-stall').textContent = `${shopName} (${stallNumber})`;
+      document.getElementById('rcpt-amount').textContent = amount.toFixed(2);
+      document.getElementById('rcpt-balance').textContent = coupon.balance.toFixed(2);
+      setTimeout(() => {
+        document.getElementById('receiptModal').classList.add('active');
+      }, 100);
+
+      document.getElementById('amount').value = '';
+      document.getElementById('couponId').value = '';
+      document.getElementById('stallNumberInput').value = '';
+      document.getElementById('autoShopName').style.display = 'none';
+      if (isAdminLoggedIn) refreshAdminView();
+    }
+
+    function submitClassRegistration() {
+      const stallNumber = document.getElementById('regStallNumber').value.trim().toUpperCase();
+      const shopName = document.getElementById('regShopName').value.trim();
+      const batch = document.getElementById('regBatch').value.trim();
+      let program = document.getElementById('regProgram').value;
+      const customProgram = document.getElementById('regCustomProgram').value.trim();
+      const classNumber = document.getElementById('regClassNumber').value.trim();
+      const accName = document.getElementById('regAccName').value.trim().toUpperCase();
+      const bankName = document.getElementById('regBankName').value.trim().toUpperCase();
+      const accNum = document.getElementById('regAccNum').value.trim();
+      const phone = document.getElementById('regPhone').value.trim();
+      const resultDiv = document.getElementById('regResult');
+      resultDiv.className = 'result';
+      if (program === 'Lain-lain') {
+        if (!customProgram) {
+          showErrorReg("Sila nyatakan program pengajian dalam medan 'Sila nyatakan program'.");
+          return;
+        }
+        program = customProgram;
+      }
+      if (!stallNumber) { showErrorReg("Nombor gerai wajib diisi."); return; }
+      if (!shopName) { showErrorReg("Nama gerai wajib diisi."); return; }
+      if (!batch) { showErrorReg("Batch ambilan wajib diisi."); return; }
+      if (!program) { showErrorReg("Sila pilih atau nyatakan program pengajian."); return; }
+      if (!classNumber) { showErrorReg("Nombor kelas wajib diisi."); return; }
+      if (!accName) { showErrorReg("Nama pemegang akaun wajib diisi (dalam HURUF BESAR)."); return; }
+      if (!bankName) { showErrorReg("Nama bank wajib diisi (dalam HURUF BESAR)."); return; }
+      if (!/^\d{8,20}$/.test(accNum)) { showErrorReg("Nombor akaun mesti 8–20 digit nombor sahaja."); return; }
+      if (!isValidMalaysianPhone(phone)) {
+        showErrorReg("Nombor telefon tidak sah. Contoh: 0123456789 atau 012-3456789");
+        return;
+      }
+      const newId = `class_${Date.now()}`;
+      const newStall = {
+        id: newId,
+        stallNumber,
+        shopName,
+        batch,
+        program,
+        classNumber,
+        accName,
+        bankName,
+        accNum,
+        phone,
+        registeredAt: new Date().toLocaleString('ms-MY')
+      };
+      CLASSSTALLS.push(newStall);
+      shopStats[newId] = { count: 0, total: 0 };
+      saveToStorage();
+      updateShopSelect();
+
+      // Clear form
+      document.getElementById('regStallNumber').value = '';
+      document.getElementById('regShopName').value = '';
+      document.getElementById('regBatch').value = '';
+      document.getElementById('regProgram').value = '';
+      document.getElementById('regCustomProgram').value = '';
+      document.getElementById('regClassNumber').value = '';
+      document.getElementById('regAccName').value = '';
+      document.getElementById('regBankName').value = '';
+      document.getElementById('regAccNum').value = '';
+      document.getElementById('regPhone').value = '';
+      toggleCustomProgramField();
+
+      resultDiv.className = 'result success';
+      resultDiv.innerHTML = `✅ <strong>Pendaftaran berjaya!</strong><br>Gerai <strong>${stallNumber}</strong> (${shopName})<br>Program: <strong>${program}</strong> | Kelas: <strong>${classNumber}</strong>`;
+    }
+
+    function updateShopSelect() {
+      const select = document.getElementById('shopSelect');
+      if (!select) return;
+      select.innerHTML = '<option value="">-- Pilih Kedai --</option>';
+      SHOPS.forEach(shop => {
+        const opt = document.createElement('option');
+        opt.value = shop.id;
+        opt.textContent = shop.name;
+        select.appendChild(opt);
+      });
+      CLASSSTALLS.forEach(stall => {
+        const opt = document.createElement('option');
+        opt.value = stall.id;
+        opt.textContent = `${stall.stallNumber} - ${stall.shopName} (${stall.program})`;
+        select.appendChild(opt);
+      });
+    }
+
+    function renderClassStalls() {
+      const container = document.getElementById('classStallsList');
+      if (CLASSSTALLS.length === 0) {
+        container.innerHTML = '<p style="text-align:center;color:#64748b;font-size:1.1rem;padding:30px;">🎉 Tiada gerai kelas didaftarkan lagi.</p>';
+        return;
+      }
+      container.innerHTML = CLASSSTALLS.map(stall => `
+        <div class="shop-card">
+          <div class="shop-header">
+            <div>
+              <div class="shop-title">🏪 ${stall.stallNumber} - ${stall.shopName}</div>
+              <div class="shop-meta">🎓 <strong>${stall.program}</strong> | Kelas: ${stall.classNumber}</div>
+              <div class="shop-meta">📅 Batch: ${stall.batch}</div>
+              <div class="shop-meta">📱 ${stall.phone}</div>
+            </div>
+            <div class="btn-group">
+              <button class="edit-btn" onclick="editStall('${stall.id}')">✏️ Edit</button>
+              <button class="delete-btn" onclick="deleteStall('${stall.id}')">🗑️ Padam</button>
+            </div>
+          </div>
+          <div class="shop-bank">
+            <strong>🏦 Maklumat Bank</strong><br>
+            👤 Pemegang: ${stall.accName}<br>
+            🏛️ Bank: ${stall.bankName}<br>
+            💳 Akaun: ${stall.accNum}
+          </div>
+          <div style="font-size:0.8rem;color:#718096;margin-top:10px;">
+            📅 Daftar: ${stall.registeredAt}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function deleteStall(id) {
+      if (!confirm("⚠️ Padam gerai kelas ini? Tindakan tidak boleh dipulihkan.")) return;
+      CLASSSTALLS = CLASSSTALLS.filter(s => s.id !== id);
+      delete shopStats[id];
+      saveToStorage();
+      updateShopSelect();
+      renderClassStalls();
+      alert("✅ Gerai kelas berjaya dipadam.");
+    }
+
+    function editStall(id) {
+      const stall = CLASSSTALLS.find(s => s.id === id);
+      if (!stall) return;
+      const newStallNum = prompt("Nombor Gerai:", stall.stallNumber);
+      const newName = prompt("Nama Gerai:", stall.shopName);
+      const newBatch = prompt("Batch Ambilan:", stall.batch);
+      let newProg = prompt("Program Pengajian:", stall.program);
+      const newClass = prompt("Nombor Kelas:", stall.classNumber);
+      const newAcc = prompt("Nama Pemegang Akaun (HURUF BESAR):", stall.accName);
+      const newBank = prompt("Nama Bank (HURUF BESAR):", stall.bankName);
+      const newAccNum = prompt("Nombor Akaun:", stall.accNum);
+      const newPhone = prompt("Nombor Telefon:", stall.phone);
+      if (newStallNum !== null) stall.stallNumber = newStallNum.trim().toUpperCase();
+      if (newName !== null) stall.shopName = newName.trim();
+      if (newBatch !== null) stall.batch = newBatch.trim();
+      if (newProg !== null) stall.program = newProg.trim();
+      if (newClass !== null) stall.classNumber = newClass.trim();
+      if (newAcc !== null) stall.accName = newAcc.trim().toUpperCase();
+      if (newBank !== null) stall.bankName = newBank.trim().toUpperCase();
+      if (newAccNum !== null) stall.accNum = newAccNum.trim();
+      if (newPhone !== null) stall.phone = newPhone.trim();
+      saveToStorage();
+      renderClassStalls();
+      alert("✅ Maklumat gerai kelas dikemaskini.");
+    }
+
+    function tryAdminLogin() {
+      const pass = document.getElementById('adminPass').value;
+      const msg = document.getElementById('authMessage');
+      if (pass === ADMIN_PASSWORD) {
+        isAdminLoggedIn = true;
+        document.getElementById('adminAuth').style.display = 'none';
+        document.getElementById('adminDashboard').style.display = 'block';
+        refreshAdminView();
+        msg.innerHTML = '<span style="color:#38a169;">✅ Selamat datang, Pentadbir!</span>';
+      } else {
+        msg.innerHTML = '<span style="color:#e53e3e;">❌ Kata laluan salah. Cuba lagi.</span>';
+      }
+    }
+
+    function filterCoupons() {
+      const search = document.getElementById('couponSearch').value.trim().toUpperCase();
+      const sort = document.getElementById('couponSort').value;
+      let couponEntries = Object.entries(coupons);
+      if (search) {
+        couponEntries = couponEntries.filter(([id]) => id.includes(search));
+      }
+      switch (sort) {
+        case 'used-first':
+          couponEntries.sort((a, b) => (b[1].balance < 10) - (a[1].balance < 10) || a[0].localeCompare(b[0]));
+          break;
+        case 'low-balance':
+          couponEntries.sort((a, b) => a[1].balance - b[1].balance);
+          break;
+        case 'az':
+          couponEntries.sort((a, b) => a[0].localeCompare(b[0]));
+          break;
+        case 'za':
+          couponEntries.sort((a, b) => b[0].localeCompare(a[0]));
+          break;
+        default:
+          couponEntries.sort((a, b) => a[0].localeCompare(b[0]));
+      }
+      renderCouponsTable(couponEntries);
+    }
+
+    function renderCouponsTable(entries) {
+      const couponTbody = document.querySelector('#couponTable tbody');
+      couponTbody.innerHTML = '';
+      if (entries.length === 0) {
+        couponTbody.innerHTML = `<tr><td colspan="3" style="text-align:center;color:#64748b;padding:30px;font-size:1.1rem;">🔍 Tiada kupon ditemui.</td></tr>`;
+        return;
+      }
+      entries.slice(0, 3000).forEach(([id, c]) => {
+        const row = document.createElement('tr');
+        const isUsed = c.balance < 10.00;
+        row.innerHTML = `
+          <td style="font-weight:bold;font-size:1.2rem;">🎫 ${id}</td>
+          <td><span class="${isUsed ? 'status-used' : 'status-unused'}">
+            ${isUsed ? '✅ Telah Digunakan' : '➖ Belum Digunakan'}
+          </span></td>
+          <td style="font-weight:bold;font-size:1.1rem;">💰 RM${c.balance.toFixed(2)}</td>
+        `;
+        couponTbody.appendChild(row);
+      });
+    }
+
+    function refreshAdminView() {
+      renderClassStalls();
+      const allShops = [...SHOPS.map(s => ({...s, shopName: s.name, type: 'default' })),
+        ...CLASSSTALLS.map(s => ({...s, name: s.shopName, location: `${s.program} - ${s.classNumber}`, type: 'class' }))]
+        .map(shop => ({
+          name: shop.name,
+          location: shop.location || shop.program,
+          ...shopStats[shop.id] || { count: 0, total: 0 }
+        }))
+        .sort((a, b) => b.total - a.total);
+
+      const profitTbody = document.querySelector('#profitTable tbody');
+      profitTbody.innerHTML = '';
+      allShops.forEach(shop => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>🏪 ${shop.name} <small>(${shop.location})</small></td>
+          <td style="font-weight:bold;">${shop.count}</td>
+          <td style="font-weight:bold;font-size:1.1rem;">💰 RM${shop.total.toFixed(2)}</td>
+        `;
+        profitTbody.appendChild(row);
+      });
+
+      const txList = document.getElementById('transactionList');
+      txList.innerHTML = transactions.length
+        ? ''
+        : '<p style="text-align:center;color:#64748b;padding:20px;font-size:1.1rem;">📡 Tiada transaksi lagi.</p>';
+      transactions.slice(0, 20).forEach(tx => {
+        const div = document.createElement('div');
+        div.style.padding = '15px';
+        div.style.borderBottom = '1px solid #f1f5f9';
+        div.style.backgroundColor = '#fafcff';
+        div.style.borderRadius = '8px';
+        div.style.marginBottom = '8px';
+        div.innerHTML = `
+          <strong>🕐 ${tx.time}</strong><br>
+          <span style="color:#6b46c1;font-weight:bold;font-size:1.1rem;">🎫 ${tx.couponId}</span> → ${tx.shopName}<br>
+          💰 RM${tx.amount.toFixed(2)} | 💵 Baki: RM${tx.balanceAfter.toFixed(2)}
+        `;
+        txList.appendChild(div);
+      });
+
+      filterCoupons();
+      updateTotalStats();
+    }
+
+    function confirmReset() {
+      if (confirm("⚠️ Anda pasti mahu reset SEMUA data?\n- 3000 kupon (KI0001–KI3000)\n- Semua gerai & transaksi dipadam\n- Data lama akan DIHAPUS TANPA BAYARAN!")) {
+        resetAllData();
+      }
+    }
+
+    function resetAllData() {
+      clearAllStorage();
+      initializeDefaultData();
+      CLASSSTALLS = [];
+      coupons = generateSequentialCoupons(3000);
+      transactions = [];
+      shopStats = initShopStats();
+      saveToStorage();
+      updateShopSelect();
+      alert("✅ SEMUA DATA BERJAYA DIRESET!\n- 3000 kupon: KI0001 hingga KI3000\n- Senarai gerai kelas dikosongkan\n- Transaksi dipadam");
+      if (isAdminLoggedIn) {
+        renderClassStalls();
+        refreshAdminView();
+      }
+    }
+
+    function updateTotalStats() {
+      const total = transactions.length;
+      document.getElementById('totalStats').textContent = total;
+    }
+
+    function closeReceipt() {
+      document.getElementById('receiptModal').classList.remove('active');
+    }
+
+    function closeRejectModal() {
+      document.getElementById('rejectModal').classList.remove('active');
+    }
+
+    window.onload = () => {
+      loadFromStorage();
+    };
+  </script>
+</body>
+</html>
